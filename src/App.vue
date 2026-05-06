@@ -1,12 +1,10 @@
 <template>
   <div id="app">
-    <Questionnaire />
+    <router-view></router-view>
   </div>
 </template>
 
-<script setup lang="ts">
-import Questionnaire from './components/AnketaHealth.vue'
-</script>
+<script setup lang="ts"></script>
 
 <style>
 #app {
