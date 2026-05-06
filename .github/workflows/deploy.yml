@@ -7,22 +7,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Install dependencies and build
-        run: |
-          npm ci
-          npm run build
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          branch: gh-pages
-      - name: Set environment variables
+
+      - name: Create .env file with secrets
         run: |
           echo "VITE_EMAILJS_PUBLIC_KEY=${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}" >> .env
           echo "VITE_EMAILJS_SERVICE_ID=${{ secrets.VITE_EMAILJS_SERVICE_ID }}" >> .env
           echo "VITE_EMAILJS_TEMPLATE_ID=${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}" >> .env
           echo "VITE_ADMIN_EMAIL=${{ secrets.VITE_ADMIN_EMAIL }}" >> .env
+
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
