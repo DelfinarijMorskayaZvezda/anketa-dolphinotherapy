@@ -25,10 +25,6 @@ jobs:
           npm ci
           npm run build
 
-      - name: Create _redirects file for SPA routing
-        run: |
-          echo "/* /index.html 200" > dist/_redirects
-
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
