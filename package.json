@@ -1,5 +1,6 @@
 {
   "name": "anketa_delfinoterapia",
+  "homepage": "https://kordeliyaa.github.io/anketa-dolphinotherapy/",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,7 +13,9 @@
     "lint": "run-s lint:*",
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
-    "format": "prettier --write --experimental-cli src/"
+    "format": "prettier --write --experimental-cli src/",
+    "predeploy": "npm run build",
+    "deploy": "gr-pages -d dist"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
