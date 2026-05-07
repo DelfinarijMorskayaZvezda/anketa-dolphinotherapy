@@ -13,9 +13,7 @@
     "lint": "run-s lint:*",
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
-    "format": "prettier --write --experimental-cli src/",
-    "predeploy": "npm run build",
-    "deploy": "gr-pages -d dist"
+    "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
