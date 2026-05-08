@@ -12,7 +12,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  base: './',
+  base: '/anketa-dolphinotherapy/',
 
   //base: process.env.NODE_ENV === 'production' ? '/anketa-dolphinotherapy/' : './',
 })
