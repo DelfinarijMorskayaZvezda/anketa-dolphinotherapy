@@ -3,7 +3,7 @@ import AnketaHealth from '@/components/AnketaHealth.vue'
 import ConsentSection from '@/components/ConsentSection.vue'
 
 const router = createRouter({
-  history: createWebHistory('/anketa-dolphinotherapy/'),
+  history: createWebHistory('/'),
   routes: [
     {
       path: '/',

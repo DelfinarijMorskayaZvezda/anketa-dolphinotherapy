@@ -1,5 +1,3 @@
-* text=auto eol=lf
-
 [build]
   command = "npm run build"
   publish = "dist"
@@ -7,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# Опционально: настройка SPA (если у вас одностраничное приложение)
+# Редиректы для SPA (если нужно)
 [[redirects]]
   from = "/*"
   to = "/index.html"
