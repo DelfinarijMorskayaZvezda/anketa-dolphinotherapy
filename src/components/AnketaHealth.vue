@@ -276,7 +276,7 @@ const isAnswerSelected = (questionId: number, answer: string): boolean => {
 
 // Загрузка сохранённых ответов и темы при монтировании компонента
 onMounted(() => {
-  init(EMAILJS_PUBLIC_KEY)
+  init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
 
   // Инициализация ответов
   selectedAnswers.value = {}
@@ -517,11 +517,15 @@ const submitForm = async () => {
       address: personalData.value.address,
       poolVisit: personalData.value.poolVisit,
       answers: formatAnswersForEmail(selectedAnswers.value),
-      to_email: ADMIN_EMAIL,
+      to_email: import.meta.env.VITE_ADMIN_EMAIL,
     }
 
     // Отправка через EmailJS
-    await send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+    await send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      templateParams,
+    )
 
     alert('Анкета успешно отправлена! Данные направлены на почту Дельфинария и вашу')
     clearStorage()
