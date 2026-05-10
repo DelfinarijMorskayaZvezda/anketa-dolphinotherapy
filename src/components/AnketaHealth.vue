@@ -206,11 +206,6 @@ import { init, send } from '@emailjs/browser'
 import { ref, onMounted, computed } from 'vue'
 import ConsentSection from './ConsentSection.vue'
 
-const EMAILJS_PUBLIC_KEY = 'ZgwC2bywNLoZsnynT'
-const EMAILJS_SERVICE_ID = 'service_nlz476d'
-const EMAILJS_TEMPLATE_ID = 'template_xsk9j7i'
-const ADMIN_EMAIL = 'JustAnya16@yandex.ru'
-
 const customAnswers = ref<{
   [key: number]: string
 }>({})
