@@ -1,54 +1,19 @@
-:root {
-  /* Светлая тема (по умолчанию) */
-  --bg-color: #ffffff;
-  --text-color: #2c3e50;
-  --btn-bg-light: #ecf0f1;
-  --btn-border-light: #bdc3c7;
-  --btn-selected-bg: #27ae60;
-  --error-bg-light: #ffeaea;
-  --error-text-light: #d63333;
-  --input-bg-light: #ffffff;
-  --input-border-light: #ddd;
-
-  /* Тёмная тема */
-  --bg-color-dark: #2d2d2d;
-  --text-color-dark: #f5f5f5;
-  --btn-bg-dark: #404040;
-  --btn-border-dark: #555555;
-  --btn-selected-bg-dark: #2ecc71;
-  --error-bg-dark: #6b2020;
-  --error-text-dark: #ffcccc;
-  --input-bg-dark: #444444;
-  --input-border-dark: #555555;
-
-  /* Текущая тема (изначально светлая) */
-  --current-bg-color: var(--bg-color);
-  --current-text-color: var(--text-color);
-  --current-btn-bg: var(--btn-bg-light);
-  --current-btn-border: var(--btn-border-light);
-  --current-btn-selected-bg: var(--btn-selected-bg);
-  --current-error-bg: var(--error-bg-light);
-  --current-error-text: var(--error-text-light);
-  --current-input-bg: var(--input-bg-light);
-  --current-input-border: var(--input-border-light);
-}
-
 /* Базовые стили для светлой темы */
 .light-theme .questionnaire {
-  background-color: var(--current-bg-color);
-  color: var(--current-text-color);
+  background-color: #ffffff;
+  color: #2c3e50;
 }
 
 .light-theme .answer-btn {
-  background-color: var(--btn-bg-light);
-  border-color: var(--btn-border-light);
-  color: var(--text-color);
+  background-color: #ecf0f1;
+  border-color: #bdc3c7;
+  color: #2c3e50;
 }
 
 .light-theme .answer-btn.selected {
-  background-color: var(--btn-selected-bg);
+  background-color: #27ae60;
   color: white;
-  border-color: var(--btn-selected-bg);
+  border-color: #27ae60;
 }
 
 .light-theme .submit-btn {
@@ -56,33 +21,33 @@
 }
 
 .light-theme .error-message {
-  background-color: var(--error-bg-light);
-  color: var(--error-text-light);
+  background-color: #ffeaea;
+  color: #d63333;
   border-color: #ffcccc;
 }
 
 /* Стили для тёмной темы */
 .dark-theme {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-dark);
+  background-color: #1a1a1a;
+  color: #f5f5f5;
 }
 
 .dark-theme .questionnaire {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-dark);
+  background-color: #2d2d2d;
+  color: #f5f5f5;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .dark-theme .answer-btn {
-  background-color: var(--btn-bg-dark);
-  border-color: var(--btn-border-dark);
-  color: var(--text-color-dark);
+  background-color: #404040;
+  border-color: #555555;
+  color: #f5f5f5;
 }
 
 .dark-theme .answer-btn.selected {
-  background-color: var(--btn-selected-bg-dark);
+  background-color: #2ecc71;
   color: white;
-  border-color: var(--btn-selected-bg-dark);
+  border-color: #27ae60;
 }
 
 .dark-theme .submit-btn {
@@ -90,8 +55,8 @@
 }
 
 .dark-theme .error-message {
-  background-color: var(--error-bg-dark);
-  color: var(--error-text-dark);
+  background-color: #6b2020;
+  color: #ffcccc;
   border-color: #993333;
 }
 
@@ -111,16 +76,187 @@ h1 {
   margin-bottom: 15px;
 }
 
+.question {
+  margin-bottom: clamp(30px, 5vh, 35px);
+}
+
+.question h3 {
+  font-size: clamp(1rem, 3.5vw, 1.25rem);
+  margin-bottom: clamp(8px, 2vh, 12px);
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.answer-btn,
+.submit-btn {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  padding: 12px 16px;
+  border: 2px solid;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 4px 0;
+}
+
+.submit-btn {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  padding: 12px 16px;
+  border: 2px solid;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-sizing: border-box;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  margin-top: clamp(10px, 2vh, 15px);
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dark-theme .submit-btn {
+  background-color: #2980b9;
+}
+
+.submit-btn:hover {
+  background-color: #2980b9;
+  opacity: 0.95;
+}
+
+.dark-theme .submit-btn:hover {
+  background-color: #2471a3;
+  opacity: 0.95;
+}
+
+.error-message {
+  background-color: #ffeaea;
+  color: #d63333;
+  padding: clamp(10px, 2vw, 12px);
+  border-radius: 6px;
+  border: 1px solid #ffcccc;
+  margin-bottom: clamp(15px, 3vh, 20px);
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Стиль переключателя темы */
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.theme-switcher span {
+  color: #2c3e50;
+  transition: color 0.3s ease;
+}
+
+.dark-theme .theme-switcher span {
+  color: #f5f5f5;
+}
+
+.theme-switcher span.active {
+  color: #3498db;
+}
+
+.dark-theme .theme-switcher span.active {
+  color: #3498db;
+}
+
+/* Стиль тумблера */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #3498db;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Стили для блока персональных данных */
+.personal-data {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom: 3rem;
+  gap: 1.5rem;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+/* Стили полей ввода для светлой темы */
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid var(--current-input-border);
+  border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 16px;
-  background-color: var(--current-input-bg);
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
 }
 
 /* Фокусированное состояние для светлой темы */
@@ -136,22 +272,75 @@ h1 {
 .dark-theme .form-group input,
 .dark-theme .form-group textarea,
 .dark-theme .form-group select {
-  background-color: var(--input-bg-dark);
-  color: var(--text-color-dark);
-  border-color: var(--input-border-dark);
+  background-color: #444444;
+  color: #f5f5f5;
+  border-color: #555555;
 }
 
+/* Фокусированное состояние для тёмной темы */
+.dark-theme .form-group input:focus,
+.dark-theme .form-group textarea:focus,
+.dark-theme .form-group select:focus {
+  outline: none;
+  border-color: #5d8aa8;
+  box-shadow: 0 0 0 2px rgba(93, 138, 168, 0.3);
+}
+
+/* Отключённое состояние для светлой темы */
+.form-group input:disabled,
+.form-group textarea:disabled,
+.form-group select:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* Отключённое состояние для тёмной темы */
+.dark-theme .form-group input:disabled,
+.dark-theme .form-group textarea:disabled,
+.dark-theme .form-group select:disabled {
+  background-color: #333333;
+  color: #888888;
+  border-color: #444444;
+  cursor: not-allowed;
+}
+
+/* Стили для CustomInput в тёмной теме */
 .dark-theme .custom-input-container input {
   background-color: #555555;
-  color: var(--text-color-dark);
+  color: #f5f5f5;
   border-color: #666666;
+}
+
+.dark-theme .custom-input-container input:focus {
+  outline: none;
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.4);
+}
+
+.dark-theme .custom-input-container input:disabled {
+  background-color: #444444;
+  color: #888888;
+  border-color: #555555;
+  cursor: not-allowed;
+}
+
+.dark-theme .custom-input-container.has-error input {
+  border-color: #cc4444;
+  box-shadow: 0 0 0 2px rgba(204, 68, 68, 0.3);
+}
+
+.dark-theme .custom-input-container.has-success input {
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.3);
 }
 
 /* Стили для полей ввода с ошибками (светлая тема) */
 .form-group.has-error input,
 .form-group.has-error textarea,
 .form-group.has-error select {
-  border-color: var(--error-border-light);
+  border-color: #d63333;
   box-shadow: 0 0 0 2px rgba(214, 51, 51, 0.25);
 }
 
@@ -159,7 +348,7 @@ h1 {
 .form-group.has-success input,
 .form-group.has-success textarea,
 .form-group.has-success select {
-  border-color: var(--success-border-light);
+  border-color: #27ae60;
   box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.25);
 }
 
@@ -167,7 +356,7 @@ h1 {
 .dark-theme .form-group.has-error input,
 .dark-theme .form-group.has-error textarea,
 .dark-theme .form-group.has-error select {
-  border-color: var(--error-border-dark);
+  border-color: #cc4444;
   box-shadow: 0 0 0 2px rgba(204, 68, 68, 0.3);
 }
 
@@ -175,7 +364,7 @@ h1 {
 .dark-theme .form-group.has-success input,
 .dark-theme .form-group.has-success textarea,
 .dark-theme .form-group.has-success select {
-  border-color: var(--success-border-dark);
+  border-color: #2ecc71;
   box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.3);
 }
 
@@ -190,57 +379,26 @@ h1 {
 .custom-input-container input {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid var(--current-input-border);
+  border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
-  background-color: var(--current-input-bg);
 }
 
 .custom-input-container input:focus {
   outline: none;
-  border-color: var(--focus-border-light);
+  border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 /* Фокусированное состояние CustomInput в светлой теме */
 .light-theme .custom-input-container input:focus {
   outline: none;
-  border-color: var(--focus-border-light);
-  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.3);
-}
-
-/* Тёмная тема для CustomInput */
-.dark-theme .custom-input-container input {
-  background-color: var(--input-bg-dark);
-  color: var(--text-color-dark);
-  border-color: var(--input-border-dark);
-}
-
-.dark-theme .custom-input-container input:focus {
-  outline: none;
-  border-color: var(--focus-border-dark);
-  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.4);
-}
-
-.dark-theme .custom-input-container input:disabled {
-  background-color: #444444;
-  color: #888888;
-  border-color: #555555;
-  cursor: not-allowed;
-}
-
-.dark-theme .custom-input-container.has-error input {
-  border-color: var(--error-border-dark);
-  box-shadow: 0 0 0 2px rgba(204, 68, 68, 0.3);
-}
-
-.dark-theme .custom-input-container.has-success input {
-  border-color: var(--success-border-dark);
+  border-color: #2ecc71;
   box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.3);
 }
 
 .unit {
-  color: var(--unit-color);
+  color: #666;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -292,17 +450,17 @@ h1 {
 input[type='checkbox'] {
   width: 16px;
   height: 16px;
-  border: 2px solid var(--checkbox-border);
+  border: 2px solid #ccc;
   border-radius: 4px;
   appearance: none;
-  background-color: var(--checkbox-bg);
+  background-color: white;
   cursor: pointer;
   position: relative;
 }
 
 input[type='checkbox']:checked {
-  background-color: var(--checkbox-checked-bg);
-  border-color: var(--checkbox-checked-border);
+  background-color: #3498db;
+  border-color: #2980b9;
 }
 
 input[type='checkbox']:checked::after {
@@ -318,17 +476,17 @@ input[type='checkbox']:checked::after {
 }
 
 input[type='checkbox']:hover {
-  border-color: var(--checkbox-hover-border);
+  border-color: #666;
 }
 
 .dark-theme input[type='checkbox'] {
-  border-color: var(--checkbox-border-dark);
-  background-color: var(--checkbox-bg-dark);
+  border-color: #555;
+  background-color: #333;
 }
 
 .dark-theme input[type='checkbox']:checked {
-  background-color: var(--checkbox-checked-bg-dark);
-  border-color: var(--checkbox-checked-border-dark);
+  background-color: #3498db;
+  border-color: #2980b9;
 }
 
 .dark-theme input[type='checkbox']:checked::after {
@@ -336,14 +494,14 @@ input[type='checkbox']:hover {
 }
 
 .dark-theme input[type='checkbox']:hover {
-  border-color: var(--checkbox-hover-border-dark);
+  border-color: #777;
 }
 
 /* Стили для ссылки в тексте согласия */
 .consent-link {
   background: none;
   border: none;
-  color: var(--link-color);
+  color: #007bff;
   text-decoration: underline;
   cursor: pointer;
   padding: 0;
@@ -351,11 +509,11 @@ input[type='checkbox']:hover {
 }
 
 .dark-theme .consent-link {
-  color: var(--link-color-dark);
+  color: #4d90fe;
 }
 
 .consent-link:hover {
-  color: var(--link-hover-color);
+  color: #0056b3;
   text-decoration: none;
 }
 
@@ -374,24 +532,23 @@ input[type='checkbox']:hover {
 }
 
 .consent-modal-content {
-  background: var(--current-bg-color);
+  background: white;
   padding: 25px;
   border-radius: 8px;
   max-width: 90%;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  color: var(--current-text-color);
 }
 
 .dark-theme .consent-modal-content {
-  background: var(--bg-color-dark);
-  color: var(--text-color-dark);
+  background: #2d2d2d;
+  color: #f5f5f5;
 }
 
 .close-modal-btn {
-  background-color: var(--close-btn-bg);
-  color: var(--close-btn-text);
+  background-color: #dc3545;
+  color: white;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -402,12 +559,12 @@ input[type='checkbox']:hover {
 }
 
 .close-modal-btn:hover {
-  background-color: var(--close-btn-hover-bg);
+  background-color: #c82333;
 }
 
 /* Стили для контейнера согласия */
 .consent-container {
-  border: 1px solid var(--consent-border);
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 16px;
   background-color: transparent;
@@ -422,20 +579,19 @@ input[type='checkbox']:hover {
 
 /* Тёмная тема: чуть более тёмная рамка для контраста */
 .dark-theme .consent-container {
-  border-color: var(--consent-border-dark);
+  border-color: #444444;
 }
 
 /* Отступы вокруг всего блока согласия */
-
 /* Стили для звёздочки снаружи рамки */
 .outside-asterisk {
   position: absolute;
   left: -12px;
   top: -12px;
-  color: var(--asterisk-color);
+  color: #d63333;
   font-weight: bold;
   font-size: 14px;
-  background: var(--current-bg-color);
+  background: white;
   padding: 2px 4px;
   border-radius: 3px;
   z-index: 10;
@@ -459,87 +615,18 @@ input[type='checkbox']:hover {
 
 /* Тёмная тема: меняем цвет звёздочки и фона */
 .dark-theme .outside-asterisk {
-  color: var(--asterisk-color-dark);
-  background: var(--bg-color-dark);
+  color: #ff6b6b;
+  background: #2d2d2d;
 }
 
 /* Стиль для обязательных звёздочек */
 .required-asterisk {
-  color: var(--asterisk-color);
+  color: #d63333;
   font-weight: bold;
   margin-left: 4px;
 }
 
 /* Для тёмной темы */
 .dark-theme .required-asterisk {
-  color: var(--asterisk-color-dark);
-}
-
-/* Стили для кнопок ответов */
-.answer-btn {
-  background-color: var(--current-btn-bg);
-  border-color: var(--current-btn-border);
-  color: var(--current-text-color);
-  border: 2px solid;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 4px 0;
-  padding: 12px 16px;
-  font-size: clamp(0.875rem, 2.5vw, 1rem);
-}
-
-.answer-btn.selected {
-  background-color: var(--current-btn-selected-bg);
-  color: white;
-  border-color: var(--current-btn-selected-bg);
-}
-
-/* Стили для кнопки отправки */
-.submit-btn {
-  font-size: clamp(0.875rem, 2.5vw, 1rem);
-  padding: 12px 16px;
-  border: 2px solid;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  box-sizing: border-box;
-  background-color: var(--submit-btn-bg);
-  color: var(--submit-btn-text);
-  border: none;
-  margin-top: clamp(10px, 2vh, 15px);
-  width: 100%;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.submit-btn:hover {
-  background-color: var(--submit-btn-hover-bg);
-  opacity: 0.95;
-}
-
-.dark-theme .submit-btn {
-  background-color: var(--submit-btn-bg-dark);
-}
-
-.dark-theme .submit-btn:hover {
-  background-color: var(--submit-btn-hover-bg-dark);
-  opacity: 0.95;
-}
-
-/* Стили для сообщения об ошибке */
-.error-message {
-  background-color: var(--current-error-bg);
-  color: var(--current-error-text);
-  padding: clamp(10px, 2vw, 12px);
-  border-radius: 6px;
-  border: 1px solid var(--error-border);
-  margin-bottom: clamp(15px, 3vh, 20px);
-  text-align: center;
-  font-weight: bold;
+  color: #ff6b6b;
 }
