@@ -331,10 +331,9 @@ onMounted(() => {
     isDarkTheme.value = false
     document.documentElement.classList.remove('dark-theme')
   } else {
-    // Если тема не сохранена, используем светлую по умолчанию
     isDarkTheme.value = false
     document.documentElement.classList.remove('dark-theme')
-    localStorage.setItem(THEME_KEY, 'light') // фиксируем выбор
+    localStorage.setItem(THEME_KEY, 'light')
   }
 })
 
