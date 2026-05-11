@@ -206,6 +206,8 @@ import { init, send } from '@emailjs/browser'
 import { ref, onMounted, computed } from 'vue'
 import ConsentSection from './ConsentSection.vue'
 
+import { applyDarkTheme, applyLightTheme } from '@/main'
+
 const customAnswers = ref<{
   [key: number]: string
 }>({})
@@ -326,15 +328,27 @@ onMounted(() => {
   const savedTheme = localStorage.getItem(THEME_KEY)
   if (savedTheme === 'dark') {
     isDarkTheme.value = true
+    applyDarkTheme()
     document.documentElement.classList.add('dark-theme')
   } else if (savedTheme === 'light') {
     isDarkTheme.value = false
+    applyLightTheme()
     document.documentElement.classList.remove('dark-theme')
   } else {
-    // Если тема не сохранена, используем светлую по умолчанию
-    isDarkTheme.value = false
-    document.documentElement.classList.remove('dark-theme')
-    localStorage.setItem(THEME_KEY, 'light') // фиксируем выбор
+    // Если тема не сохранена, используем prefers-color-scheme
+    const prefersDark =
+      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    if (prefersDark) {
+      isDarkTheme.value = true
+      applyDarkTheme()
+      document.documentElement.classList.add('dark-theme')
+      localStorage.setItem(THEME_KEY, 'dark')
+    } else {
+      isDarkTheme.value = false
+      applyLightTheme()
+      document.documentElement.classList.remove('dark-theme')
+      localStorage.setItem(THEME_KEY, 'light')
+    }
   }
 })
 
@@ -398,9 +412,11 @@ const toggleTheme = () => {
   isDarkTheme.value = !isDarkTheme.value
 
   if (isDarkTheme.value) {
+    applyDarkTheme() // из main.ts
     document.documentElement.classList.add('dark-theme')
     localStorage.setItem(THEME_KEY, 'dark')
   } else {
+    applyLightTheme() // из main.ts
     document.documentElement.classList.remove('dark-theme')
     localStorage.setItem(THEME_KEY, 'light')
   }
