@@ -206,8 +206,6 @@ import { init, send } from '@emailjs/browser'
 import { ref, onMounted, computed } from 'vue'
 import ConsentSection from './ConsentSection.vue'
 
-const EMAILJS_PUBLIC_KEY = 'ZgwC2bywNLoZsnynT'
-
 const customAnswers = ref<{
   [key: number]: string
 }>({})
@@ -278,7 +276,7 @@ const isAnswerSelected = (questionId: number, answer: string): boolean => {
 
 // Загрузка сохранённых ответов и темы при монтировании компонента
 onMounted(() => {
-  init(EMAILJS_PUBLIC_KEY)
+  init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
 
   // Инициализация ответов
   selectedAnswers.value = {}
