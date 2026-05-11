@@ -1,7 +1,5 @@
-import { createVKBridge } from '@vkontakte/vk-bridge'
+import bridge from '@vkontakte/vk-bridge'
 
-const bridge = createVKBridge()
-
-bridge.send('VKWebAppInit', {})
+bridge.send('VKWebAppInit')
 
 export default bridge
