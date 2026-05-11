@@ -12,7 +12,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: github-pages # привязка к окружению
+    environment: github-pages
 
     steps:
       - uses: actions/checkout@v4
