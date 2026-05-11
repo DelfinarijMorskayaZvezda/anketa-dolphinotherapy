@@ -327,8 +327,14 @@ onMounted(() => {
   if (savedTheme === 'dark') {
     isDarkTheme.value = true
     document.documentElement.classList.add('dark-theme')
-  } else {
+  } else if (savedTheme === 'light') {
+    isDarkTheme.value = false
     document.documentElement.classList.remove('dark-theme')
+  } else {
+    // Если тема не сохранена, используем светлую по умолчанию
+    isDarkTheme.value = false
+    document.documentElement.classList.remove('dark-theme')
+    localStorage.setItem(THEME_KEY, 'light') // фиксируем выбор
   }
 })
 
