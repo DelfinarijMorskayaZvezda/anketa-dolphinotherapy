@@ -12,5 +12,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  base: '/anketa-dolphinotherapy/',
+  base: '/anketa-delfinoterapii/',
 })
