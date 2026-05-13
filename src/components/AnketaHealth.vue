@@ -92,23 +92,36 @@
           placeholder="Укажите при наличии"
         />
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': validationErrors.phone }">
         <label><span class="required-asterisk">*</span> Номер телефона:</label>
         <input
           v-model="personalData.phone"
-          @input="saveToStorage"
+          @input="
+            (e) => {
+              saveToStorage()
+              validateOnInput()
+            }
+          "
           type="tel"
           placeholder="+7 (XXX) XXX-XX-XX"
         />
+        <span v-if="validationErrors.phone" class="error-text">{{ validationErrors.phone }}</span>
       </div>
-      <div class="form-group">
+
+      <div class="form-group" :class="{ 'has-error': validationErrors.email }">
         <label><span class="required-asterisk">*</span> Электронная почта:</label>
         <input
           v-model="personalData.email"
-          @input="saveToStorage"
+          @input="
+            (e) => {
+              saveToStorage()
+              validateOnInput()
+            }
+          "
           type="email"
           placeholder="example@domain.com"
         />
+        <span v-if="validationErrors.email" class="error-text">{{ validationErrors.email }}</span>
       </div>
       <div class="form-group">
         <label
@@ -227,6 +240,39 @@ const personalData = ref({
   poolVisit: '',
 })
 
+// Валидация email
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
+  return emailRegex.test(email)
+}
+
+// Валидация номера телефона
+const isValidPhone = (phone: string): boolean => {
+  const cleaned = phone.replace(/\D/g, '')
+  return cleaned.length === 11 || cleaned.length === 12
+}
+
+// Функция мгновенной валидации при вводе
+const validateOnInput = () => {
+  // Очистка предыдущих ошибок для телефона и почты
+  validationErrors.value.phone = ''
+  validationErrors.value.email = ''
+
+  // Валидация телефона
+  if (personalData.value.phone.trim()) {
+    if (!isValidPhone(personalData.value.phone)) {
+      validationErrors.value.phone = 'Некорректный формат номера телефона'
+    }
+  }
+
+  // Валидация email
+  if (personalData.value.email.trim()) {
+    if (!isValidEmail(personalData.value.email)) {
+      validationErrors.value.email = 'Некорректный формат электронной почты'
+    }
+  }
+}
+
 import { QUESTIONS } from '@/data/questions.ts'
 
 const questions = ref(QUESTIONS)
@@ -236,6 +282,11 @@ const selectedAnswers = ref<{
 }>({})
 
 const error = ref('')
+
+const validationErrors = ref<{
+  phone?: string
+  email?: string
+}>({})
 
 // Флаг блокировки отправки
 const isSubmitting = ref(false)
@@ -338,7 +389,6 @@ onMounted(() => {
 })
 
 // Функция переключения ответа (выбрать/снять выделение)
-
 const toggleAnswer = (questionId: number, answer: string) => {
   const question = questions.value.find((q) => q.id === questionId)
 
@@ -422,17 +472,34 @@ const formatAnswersForEmail = (answers: { [key: number]: string | string[] | nul
 }
 
 const submitForm = async () => {
-  // Блокируем повторные отправки, если уже идёт процесс
+  // Блокировка повторных отправок, если уже идёт процесс
   if (isSubmitting.value) return
-
-  // Устанавливаем флаг отправки
+  // Установка флага отправки
   isSubmitting.value = true
+
+  // Сброс всех ошибок валидации перед новой проверкой
+  validationErrors.value = {}
+  error.value = ''
 
   try {
     // Проверка согласия на обработку данных
     if (!isConsentGiven.value) {
       error.value = 'Необходимо дать согласие на обработку персональных данных'
       return
+    }
+
+    // Валидация номера телефона
+    if (!personalData.value.phone.trim()) {
+      validationErrors.value.phone = 'Номер телефона обязателен'
+    } else if (!isValidPhone(personalData.value.phone)) {
+      validationErrors.value.phone = 'Некорректный формат номера телефона'
+    }
+
+    // Валидация email
+    if (!personalData.value.email.trim()) {
+      validationErrors.value.email = 'Электронная почта обязательна'
+    } else if (!isValidEmail(personalData.value.email)) {
+      validationErrors.value.email = 'Некорректный формат электронной почты'
     }
 
     // Проверка обязательных персональных данных
@@ -500,11 +567,28 @@ const submitForm = async () => {
       )
     }
 
-    // Если есть ошибки — показываем и прерываем отправку
+    // Если есть ошибки, прерывается отправка
     if (errorMessages.length > 0) {
       error.value = errorMessages.join('. ') + '.'
       return
     }
+
+    // Генерация даты и времени отправки
+    const now = new Date()
+    const submissionDateTime = now.toLocaleDateString('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    })
+
+    // Формирование текста согласия
+    const consentStatus = isConsentGiven.value ? 'Да' : 'Нет'
+    const consentDetails = isConsentGiven.value
+      ? 'Пользователь дал согласие на обработку персональных данных в соответствии с политикой конфиденциальности.'
+      : 'Пользователь не дал согласия на обработку персональных данных.'
 
     // Подготовка данных для EmailJS
     const templateParams = {
@@ -521,6 +605,9 @@ const submitForm = async () => {
       diagnosis: personalData.value.diagnosis,
       address: personalData.value.address,
       poolVisit: personalData.value.poolVisit,
+      consentStatus: consentStatus,
+      consentDetails: consentDetails,
+      submissionDateTime: submissionDateTime,
       answers: formatAnswersForEmail(selectedAnswers.value),
       to_email: import.meta.env.VITE_ADMIN_EMAIL,
     }
@@ -532,13 +619,15 @@ const submitForm = async () => {
       templateParams,
     )
 
-    alert('Анкета успешно отправлена! Данные направлены на почту Дельфинария и вашу')
+    alert(
+      'Анкета успешно отправлена! Данные направлены на почту Дельфинария "Морская звезда" и вашу',
+    )
     clearStorage()
   } catch (error) {
     console.error('Ошибка отправки через EmailJS:', error)
     alert('Произошла ошибка при отправке анкеты.')
   } finally {
-    // Всегда сбрасываем флаг после завершения (успеха или ошибки)
+    // Всегда сброс флага после завершения (успеха или ошибки)
     isSubmitting.value = false
   }
 }
