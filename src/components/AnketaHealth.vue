@@ -12,6 +12,28 @@
 
     <h1>Анкета здоровья посетителя дельфинотерапии</h1>
 
+    <div class="completion-indicator">
+      <div class="progress-bar">
+        <div
+          class="progress-fill"
+          :style="{ width: `${completionPercentage}%` }"
+          :class="{
+            low: completionPercentage < 30,
+            medium: completionPercentage >= 30 && completionPercentage < 70,
+            high: completionPercentage >= 70,
+          }"
+        ></div>
+      </div>
+      <span class="status-text">
+        {{
+          completionPercentage === 100
+            ? 'Все обязательные поля заполнены! '
+            : 'Анкета заполнена на '
+        }}
+      </span>
+      <span class="percentage-text">{{ completionPercentage }}%</span>
+    </div>
+
     <!-- Блок согласия на обработку персональных данных -->
     <div class="consent-section">
       <span class="required-asterisk outside-asterisk">*</span>
@@ -222,6 +244,67 @@ import ConsentSection from './ConsentSection.vue'
 const customAnswers = ref<{
   [key: number]: string
 }>({})
+
+// Проверка обязательных персональных данных
+const requiredFields = {
+  fullName: 'ФИО',
+  weight: 'Вес',
+  height: 'Рост',
+  age: 'Возраст',
+  birthDate: 'Дата рождения',
+  phone: 'Номер телефона',
+  courseNumber: 'Номер курса и год',
+  address: 'Домашний адрес',
+}
+
+const completionPercentage = computed(() => {
+  // Общее количество обязательных полей
+  const totalRequiredFields = Object.keys(requiredFields).length + questions.value.length + 1 // +1 за согласие
+
+  // Подсчёт заполненных персональных данных
+  let filledPersonalFields = 0
+  Object.keys(requiredFields).forEach((field) => {
+    const key = field as keyof typeof personalData.value
+    const value = personalData.value[key]
+    if (value && value.toString().trim() !== '') {
+      filledPersonalFields++
+    }
+  })
+
+  // Подсчёт отвеченных вопросов
+  let answeredQuestions = 0
+  questions.value.forEach((question) => {
+    const answer = selectedAnswers.value[question.id]
+    const customAnswer = customAnswers.value[question.id]
+
+    // Проверка для вопросов с пользовательским вводом
+    if (question.customInput) {
+      const hasCustomAnswer = customAnswer && customAnswer.toString().trim() !== ''
+      if (question.multiple) {
+        const hasSelectedAnswers = Array.isArray(answer) && answer.length > 0
+        if (hasSelectedAnswers || hasCustomAnswer) answeredQuestions++
+      } else {
+        if ((answer !== null && answer !== undefined && answer !== '') || hasCustomAnswer)
+          answeredQuestions++
+      }
+    } else if (question.multiple) {
+      // Множественный выбор без пользовательского ввода
+      if (Array.isArray(answer) && answer.length > 0) answeredQuestions++
+    } else {
+      // Одиночный выбор
+      if (answer !== null && answer !== undefined && answer !== '') answeredQuestions++
+    }
+  })
+
+  // Учитываем согласие на обработку данных
+  const consentGiven = isConsentGiven.value ? 1 : 0
+
+  // Общее количество заполненных полей
+  const totalFilled = filledPersonalFields + answeredQuestions + consentGiven
+
+  // Расчёт процента с округлением до целого числа
+  return Math.min(100, Math.round((totalFilled / totalRequiredFields) * 100))
+})
 
 // Данные для персональных полей
 const personalData = ref({
@@ -500,18 +583,6 @@ const submitForm = async () => {
       validationErrors.value.email = 'Электронная почта обязательна'
     } else if (!isValidEmail(personalData.value.email)) {
       validationErrors.value.email = 'Некорректный формат электронной почты'
-    }
-
-    // Проверка обязательных персональных данных
-    const requiredFields = {
-      fullName: 'ФИО',
-      weight: 'Вес',
-      height: 'Рост',
-      age: 'Возраст',
-      birthDate: 'Дата рождения',
-      phone: 'Номер телефона',
-      courseNumber: 'Номер курса и год',
-      address: 'Домашний адрес',
     }
 
     const missingPersonalData = Object.entries(requiredFields)

@@ -403,6 +403,71 @@ input:checked + .slider:before {
   white-space: nowrap;
 }
 
+/* 4. Компонентные стили: индикатор заполнения */
+.completion-indicator {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Вариации для состояний прогресса (светлая тема) */
+.progress-fill.low {
+  background: #ff4444;
+}
+
+.progress-fill.medium {
+  background: #ffcc00;
+}
+
+.progress-fill.high {
+  background: #00c851;
+}
+
+/* Переопределения для тёмной темы */
+.dark-theme .progress-bar {
+  background: #444444;
+}
+
+.dark-theme .progress-fill.low {
+  background: #cc3333;
+}
+
+.dark-theme .progress-fill.medium {
+  background: #b39c00;
+}
+
+.dark-theme .progress-fill.high {
+  background: #00a040;
+}
+
+.percentage-text {
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 15px;
+}
+
+.status-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.dark-theme .status-text {
+  color: #aaa;
+}
+
 /* Адаптивность для средних экранов (планшеты) */
 @media (min-width: 480px) {
   .answers {
@@ -442,7 +507,8 @@ input:checked + .slider:before {
 .error-message,
 .theme-switcher span,
 .slider,
-.slider:before {
+.slider:before,
+.progress-fill {
   transition: all 0.3s ease;
 }
 
@@ -629,4 +695,18 @@ input[type='checkbox']:hover {
 /* Для тёмной темы */
 .dark-theme .required-asterisk {
   color: #ff6b6b;
+}
+
+.completion-indicator {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px;
 }
